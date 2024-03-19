@@ -2,7 +2,7 @@
 #include <queue>
 
 int main() {
-    std::queue<int> player1, player2; //создаем очереди
+    std::queue<int> player1, player2; //создаем очереди для хранения значений карт игроков
 
     for (int i = 0; i < 5; i++) { //вводим значение карт первого игрока
         int card;
