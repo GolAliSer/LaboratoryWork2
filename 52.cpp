@@ -3,46 +3,46 @@
 #include <sstream>
 
 int PostfixExample(const std::string &example) {
-    std::stack<int> stack;
-    std::istringstream is(example);
-    std::string token;
+    std::stack<int> stack; //создаем стек, так как пример считывается с конца
+    std::istringstream is(example); //разделяем пример на отдельные элементы
+    std::string token; //создаем строку для проверки элементов примера
 
-    while (is >> token) {
-        if (token == "+") {
-            int number2 = stack.top();
-            stack.pop();
-            int number1 = stack.top();
-            stack.pop();
-            stack.push(number1 + number2);
+    while (is >> token) { //цикл, где будем поверять каждый элемент, пока строка не закончится
+        if (token == "+") { //если проверяемый элемент +
+            int number2 = stack.top(); //из стека берем верхнее число, это будем первое искомое число, ближайшее к +
+            stack.pop(); //убираем верхнее число, после сохранения значения
+            int number1 = stack.top(); //из стека берем новое верхнее число, это будем второе искомое число, ближайшее к предыдущему искомому
+            stack.pop(); //убираем верхнее число, после сохранения значения
+            stack.push(number1 + number2); //добавляем в стэк новое число
         }
-        else if (token == "-") {
-            int number2 = stack.top();
-            stack.pop();
-            int number1 = stack.top();
-            stack.pop();
-            stack.push(number1 - number2);
+        else if (token == "-") { //если проверяемый элемент -
+            int number2 = stack.top(); //из стека берем верхнее число, это будем первое искомое число, ближайшее к -
+            stack.pop(); //убираем верхнее число, после сохранения значения
+            int number1 = stack.top(); //из стека берем новое верхнее число, это будем второе искомое число, ближайшее к предыдущему искомому
+            stack.pop(); //убираем верхнее число, после сохранения значения
+            stack.push(number1 - number2); //добавляем в стэк новое число
         }
-        else if (token == "*") {
-            int number2 = stack.top();
-            stack.pop();
-            int number1 = stack.top();
-            stack.pop();
-            stack.push(number1 * number2);
+        else if (token == "*") { //если проверяемый элемент *
+            int number2 = stack.top(); //из стека берем верхнее число, это будем первое искомое число, ближайшее к *
+            stack.pop(); //убираем верхнее число, после сохранения значения
+            int number1 = stack.top(); //из стека берем новое верхнее число, это будем второе искомое число, ближайшее к предыдущему искомому
+            stack.pop(); //убираем верхнее число, после сохранения значения
+            stack.push(number1 * number2); //добавляем в стэк новое число
         }
-        else {
-            stack.push(std::stoi(token));
+        else { //если проверяемый элемент не является действием (число)
+            stack.push(std::stoi(token)); //преобразовываем строчный вариант числа в числовой тип данных для дальнейшего подсчета
         }
     }
-    return stack.top();
+    return stack.top(); //возвращаем оставшееся число после перебора
 }
 
 int main() {
 
-    std::string example;
-    std::getline(std::cin, example);
+    std::string example; //переменная строки примера
+    std::getline(std::cin, example); //вводим строку, getline закончит при /n, переносе строки
 
-    int result = PostfixExample(example);
-    std::cout << result << std::endl;
+    int result = PostfixExample(example); //используем функцию
+    std::cout << result << std::endl; //выводим результат
 
     return 0;
 }
