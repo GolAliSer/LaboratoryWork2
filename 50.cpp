@@ -2,56 +2,56 @@
 #include <queue>
 
 int main() {
-    std::queue<int> player1, player2;
+    std::queue<int> player1, player2; //создаем очереди
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 5; i++) { //вводим значение карт первого игрока
         int card;
         std::cin >> card;
-        player1.push(card);
+        player1.push(card); //введенные числа добавляем в очередь
     }
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 5; i++) { //вводим значение карт второго игрока
         int card;
         std::cin >> card;
-        player2.push(card);
+        player2.push(card); //введенные числа добавляем в очередь
     }
 
-    int turns = 0;
-    while (!player1.empty() && !player2.empty()) {
-        int card1 = player1.front();
-        player1.pop();
-        int card2 = player2.front();
-        player2.pop();
+    int turns = 0; //переменная для количества шагов
+    while (!player1.empty() && !player2.empty()) { //игра продолжается до того момента пока очередь одного из игроков не опустеет
+        int card1 = player1.front(); //перменная для хранения значения верхней карты первого игрока
+        player1.pop(); //после сохранения значения мы убераем верхнюю карту
+        int card2 = player2.front(); //перменная для хранения значения верхней карты второго игрока
+        player2.pop(); //после сохранения значения мы убераем верхнюю карту
 
-        if ((card1 == 0 && card2 == 9) || (card2 == 0 && card1 == 9)) {
-            if ((card1 == 0 && card2 == 9)) {
+        if ((card1 == 0 && card2 == 9) || (card2 == 0 && card1 == 9)) { //если у нас попадается 0 и 9 - вариант исключение, т е где меньшее выигрывает
+            if ((card1 == 0 && card2 == 9)) { //если у первого игроак 0 к нему в очередь добавляем значение верхней карты первого игрока, а потом и верхней второго 
                 player1.push(card1);
                 player1.push(card2);
             }
-            else {
+            else { //если же у второга игрока 0 к нему в очередь добавляем значение верхней карты первого игрока, а потом и верхней второго 
                 player2.push(card1);
                 player2.push(card2);
             }
-        }
-        else if (card1 > card2) {
-            player1.push(card1);
+        } //если же значения верхних не 0 и 9 одновременно, то проверяем чья карта больше
+        else if (card1 > card2) { //если карта первого игрока больше, к нему добавляем значение верхней карты первого игрока, а потом и верхней второго 
+            player1.push(card1); 
             player1.push(card2);
         }
-        else if (card2 > card1) {
+        else if (card2 > card1) { //если карта второго игрока больше, к нему добавляем значение верхней карты первого игрока, а потом и верхней второго 
             player2.push(card1);
             player2.push(card2);
         }
 
-        turns++;
-        if (turns > 1000000) {
+        turns++; //после каждого хода, увеличиваем количесво ходов
+        if (turns > 1000000) { //если количество ходов превысило 1000000 выводим botva
             std::cout << "botva" << std::endl;
             return 0;
         }
     }
-    if (player1.empty()) {
+    if (player1.empty()) { //если очередь первого пустая, то выводим, что второй попедил, и количество ходов
         std::cout << "second " << turns << std::endl;
     }
-    else if (player2.empty()) {
+    else if (player2.empty()) { //если очередь второго пустая, то выводим, что первый попедил, и количество ходов
         std::cout << "first " << turns << std::endl;
     }
     return 0;
